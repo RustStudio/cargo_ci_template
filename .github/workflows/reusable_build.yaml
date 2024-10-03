@@ -1,0 +1,29 @@
+name: Cargo build
+
+on:
+    workflow_call:
+        inputs:
+            build-os:
+                description: os to build
+                required: false
+                type: string
+                default: |
+                    [{"os": "ubuntu-latest"},
+                    {"os": "macOS-latest"},
+                    {"os": "windows-latest"}]
+
+env:
+    CARGO_TERM_COLOR: always
+
+jobs:
+    build:
+        name: Build on ${{ matrix.os }}
+        runs-on: ${{ matrix.os }}
+        strategy:
+            fail-fast: false
+            matrix:
+              include: ${{fromJSON(inputs.build-os)}}
+        steps:
+            - uses: actions/checkout@v4
+            - name: Build
+              run: cargo build --verbose
