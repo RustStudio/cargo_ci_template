@@ -1,4 +1,4 @@
-name: Cargo format
+name: Cargo build
 
 on:
     workflow_call:
@@ -25,5 +25,9 @@ jobs:
               include: ${{fromJSON(inputs.build-os)}}
         steps:
             - uses: actions/checkout@v4
+            - name: Building project
+              run: cargo build --verbose
+            - name: Running test
+              run: cargo test --verbose
             - name: Check formatting
               run: cargo fmt -- --check

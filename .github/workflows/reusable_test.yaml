@@ -25,5 +25,5 @@ jobs:
               include: ${{fromJSON(inputs.build-os)}}
         steps:
             - uses: actions/checkout@v4
-            - name: Build
+            - name: Testing project
               run: cargo test --verbose
